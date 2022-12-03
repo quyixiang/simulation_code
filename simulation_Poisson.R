@@ -57,6 +57,9 @@ for (pnm in pnm_list) {
   l2_Y_bar <- c()
   l2_theta_hat_SSLS <- c()
   l2_theta_hat_LS <- c()
+  LCI_Y_bar <- c()
+  LCI_theta_hat_SSLS <- c()
+  LCI_theta_hat_LS <- c()
   for (i in c(1:500)) {
     if (i %% 100 == 0) print(i)
     
