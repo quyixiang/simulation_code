@@ -1,5 +1,5 @@
 library(MASS)
-library(matlib)
+#library(matlib)
 
 simulate_gaussian <- function(p, n, m, seed) {
   # generate beta
@@ -33,7 +33,7 @@ simulate_gaussian <- function(p, n, m, seed) {
   # calculate beta_hat
   X_vec <- cbind(rep(1, nrow(X_n)), X_n)
   Y <- matrix(Y_n, nrow = length(Y_n))
-  beta_hat <- inv(t(X_vec) %*% X_vec) %*% t(X_vec) %*% Y
+  beta_hat <- solve(t(X_vec) %*% X_vec) %*% t(X_vec) %*% Y
   beta_2_hat <- beta_hat[c(2:nrow(beta_hat)), 1]
 
   # calculate Y_bar and X_bar
@@ -48,7 +48,7 @@ simulate_gaussian <- function(p, n, m, seed) {
   theta_hat_SSLS <- Y_bar - sum(beta_2_hat * (X_bar_n - X_bar_all))
 
   # calculate MSE and sigma_2_Y
-  MSE <- sum((Y - X_vec %*% beta)^2) / (n - p - 1)
+  MSE <- sum((Y - X_vec %*% beta_hat)^2) / (n - p - 1)
   sigma_2_Y <- sum((Y - Y_bar)^2) / (n - 1)
 
   returnlist <- list("theta_hat_LS" = theta_hat_LS, "theta_hat_SSLS" = theta_hat_SSLS, "Y_bar" = Y_bar, "theta" = beta[1], "MSE" = MSE, "sigma_2_Y" = sigma_2_Y)

@@ -1,5 +1,5 @@
 library(MASS)
-library(matlib)
+#library(matlib)
 
 simulate_poission <- function(p, n, m, seed) {
 
@@ -20,8 +20,7 @@ simulate_poission <- function(p, n, m, seed) {
   # calculate beta_hat
   X_vec <- cbind(rep(1, nrow(X_n)), X_n)
   Y <- matrix(Y_n, nrow = length(Y_n))
-  beta_hat <- inv(t(X_vec) %*% X_vec) %*% t(X_vec) %*% Y
-  beta_1_hat <- beta_hat[1, 1]
+  beta_hat <- solve(t(X_vec) %*% X_vec) %*% t(X_vec) %*% Y
   beta_2_hat <- beta_hat[c(2:nrow(beta_hat)), 1]
   
   # calculate Y_bar and X_bar
@@ -36,7 +35,7 @@ simulate_poission <- function(p, n, m, seed) {
   theta_hat_SSLS <- Y_bar - sum(beta_2_hat * (X_bar_n - X_bar_all))
   
   # calculate MSE and sigma_2_Y
-  MSE <- sum((Y - X_vec %*% beta)^2) / (n - p - 1)
+  MSE <- sum((Y - X_vec %*% beta_hat)^2) / (n - p - 1)
   sigma_2_Y <- sum((Y - Y_bar)^2) / (n - 1)
 
 
@@ -44,8 +43,6 @@ simulate_poission <- function(p, n, m, seed) {
   return(returnlist)
 }
 
-
-tmp_simulation <- simulate_poission(p, n, m, seed)
 
 results <- data.frame(matrix(nrow = 0, ncol = 6))
 colnames(results) <- c("p", "m", "n", "l2_Y_bar", "l2_theta_hat_SSLS", "l2_theta_hat_LS")
