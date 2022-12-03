@@ -44,8 +44,8 @@ simulate_poission <- function(p, n, m, seed) {
 }
 
 
-results <- data.frame(matrix(nrow = 0, ncol = 6))
-colnames(results) <- c("p", "m", "n", "l2_Y_bar", "l2_theta_hat_SSLS", "l2_theta_hat_LS")
+results <- data.frame(matrix(nrow = 0, ncol = 9))
+colnames(results) <- c("p", "m", "n", "l2_Y_bar", "l2_theta_hat_SSLS", "l2_theta_hat_LS", "LCI_Y_bar", "LCI_theta_hat_SSLS", "LCI_theta_hat_LS")
 
 pnm_list <- list(c(1, 100, 100), c(1, 100, 1000), c(10, 100, 100), c(10, 100, 1000), c(50, 100, 100), c(50, 100, 1000), c(10, 500, 100), c(10, 500, 1000), c(50, 500, 100), c(50, 500, 1000), c(200, 500, 100), c(200, 500, 1000))
 
